@@ -1,0 +1,35 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+
+# Virtual environment
+.venv/
+venv/
+
+# Environment variables
+.env
+
+# Data files (important for data engineering projects)
+data/raw/
+*.csv
+*.parquet
+
+# Logs
+*.log
+
+# Airflow
+airflow/logs/
+airflow/*.pid
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+
+# Docker
+*.pid
+*.log
