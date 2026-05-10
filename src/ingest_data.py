@@ -1,11 +1,9 @@
 import pandas as pd
-
 from api_client import AlphaVantageClient
 from logger import log_error, log_info
 from validator import ResponseValidator
 
 client = AlphaVantageClient()
-
 
 def run(symbols):
 
