@@ -1,9 +1,7 @@
-version: "3.8"
-
 services:
-
   postgres:
     image: postgres:13
+    container_name: airflow_postgres
     environment:
       POSTGRES_USER: airflow
       POSTGRES_PASSWORD: airflow
@@ -13,6 +11,7 @@ services:
 
   airflow:
     image: apache/airflow:2.7.2
+    container_name: airflow_webserver
     depends_on:
       - postgres
     environment:
