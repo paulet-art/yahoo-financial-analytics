@@ -13,7 +13,12 @@ def run(symbols):
 
         data = client.fetch_daily(symbol)
 
+        print(data)
+
         is_valid, message = ResponseValidator.validate(data)
+
+        print(is_valid)
+        print(message)
 
         if not is_valid:
             log_error(f"{symbol} failed: {message}")
@@ -23,7 +28,11 @@ def run(symbols):
 
         time_series = data.get("Time Series (Daily)", {})
 
+        print(time_series)
+
         df = pd.DataFrame.from_dict(time_series, orient="index")
+
+        print(df.head())
 
         df.index = pd.to_datetime(df.index)
 
@@ -31,6 +40,10 @@ def run(symbols):
 
         df["symbol"] = symbol
 
+        print("SAVING CSV NOW")
+
         df.to_csv(f"/opt/airflow/data/{symbol}_daily.csv")
+
+        print("CSV SAVED")
 
         log_info(f"{symbol} data saved successfully")
