@@ -2,6 +2,7 @@ import pandas as pd
 from api_client import AlphaVantageClient
 from logger import log_error, log_info
 from validator import ResponseValidator
+from db import engine
 
 client = AlphaVantageClient()
 
@@ -47,3 +48,12 @@ def run(symbols):
         print("CSV SAVED")
 
         log_info(f"{symbol} data saved successfully")
+
+        df.to_sql(
+            "stock_prices",
+            engine,
+            if_exists="append",
+            index=False
+        )
+
+        print("DATA SAVED TO POSTGRES")
