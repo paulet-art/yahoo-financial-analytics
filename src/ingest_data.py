@@ -3,6 +3,7 @@ from api_client import AlphaVantageClient
 from logger import log_error, log_info
 from validator import ResponseValidator
 from db import engine
+from sqlalchemy import Date, Float, Text
 
 client = AlphaVantageClient()
 
@@ -26,10 +27,17 @@ def run(symbols):
 
         df = pd.DataFrame.from_dict(time_series, orient="index")
 
-        df.index = pd.to_datetime(df.index)
         df = df.reset_index().rename(columns={"index": "date"})
 
-        df.columns = ["open", "high", "low", "close", "volume"]
+        df = df.rename(columns={
+            "1. open": "open",
+            "2. high": "high",
+            "3. low": "low",
+            "4. close": "close",
+            "5. volume": "volume"
+        })
+
+        df = df[["date", "open", "high", "low", "close", "volume"]]
 
         df["symbol"] = symbol
 
@@ -47,7 +55,9 @@ def run(symbols):
             "stock_prices",
             engine,
             if_exists="append",
-            index=False
+            index=False,
+            method="multi",
+            chunksize=500
         )
 
         log_info(f"{symbol} inserted successfully")
