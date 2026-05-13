@@ -14,12 +14,7 @@ def run(symbols):
 
         data = client.fetch_daily(symbol)
 
-        print(data)
-
         is_valid, message = ResponseValidator.validate(data)
-
-        print(is_valid)
-        print(message)
 
         if not is_valid:
             log_error(f"{symbol} failed: {message}")
@@ -29,25 +24,24 @@ def run(symbols):
 
         time_series = data.get("Time Series (Daily)", {})
 
-        print(time_series)
-
         df = pd.DataFrame.from_dict(time_series, orient="index")
 
-        print(df.head())
-
         df.index = pd.to_datetime(df.index)
+        df = df.reset_index().rename(columns={"index": "date"})
 
         df.columns = ["open", "high", "low", "close", "volume"]
 
         df["symbol"] = symbol
 
-        print("SAVING CSV NOW")
+        df = df[["date", "symbol", "open", "high", "low", "close", "volume"]]
 
-        df.to_csv(f"/opt/airflow/data/{symbol}_daily.csv")
+        df["date"] = pd.to_datetime(df["date"])
 
-        print("CSV SAVED")
+        df[["open", "high", "low", "close", "volume"]] = df[
+            ["open", "high", "low", "close", "volume"]
+        ].astype(float)
 
-        log_info(f"{symbol} data saved successfully")
+        log_info(f"Inserting {symbol} into Postgres")
 
         df.to_sql(
             "stock_prices",
@@ -56,4 +50,4 @@ def run(symbols):
             index=False
         )
 
-        print("DATA SAVED TO POSTGRES")
+        log_info(f"{symbol} inserted successfully")

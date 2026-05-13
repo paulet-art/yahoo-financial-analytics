@@ -3,11 +3,11 @@ from airflow import DAG
 from airflow.operators.python import PythonOperator
 
 import sys
-import os
 
 sys.path.append('/opt/airflow/src')
 
 from ingest_data import run
+from config import BANK_STOCKS
 
 default_args = {
     "owner": "paulet",
@@ -16,15 +16,14 @@ default_args = {
 }
 
 def run_stock_pipeline():
-    symbols = ["EQTY"]
-    run(symbols)
+    run(BANK_STOCKS)
 
 with DAG(
     dag_id="stock_data_pipeline",
     default_args=default_args,
     description="Financial stock ingestion pipeline",
     start_date=datetime(2025, 1, 1),
-    schedule_interval="@daily",
+    schedule="@daily",
     catchup=False
 ) as dag:
 
