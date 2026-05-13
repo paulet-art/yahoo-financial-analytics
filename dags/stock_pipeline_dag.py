@@ -16,7 +16,7 @@ default_args = {
 }
 
 def run_stock_pipeline():
-    symbols = ["NVDA"]
+    symbols = ["EQTY"]
     run(symbols)
 
 with DAG(
