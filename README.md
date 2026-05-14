@@ -3,6 +3,7 @@
 An end-to-end data engineering project that extracts daily stock market data from an external API, processes it using Python, orchestrates workflows with Apache Airflow, and stores cleaned data in PostgreSQL for analytics and dashboarding.
 
 ---
+![alt text](project_architecture.png.png)
 
 ## Project Overview
 
