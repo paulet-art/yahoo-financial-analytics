@@ -2,8 +2,9 @@
 
 An end-to-end data engineering project that extracts daily stock market data from an external API, processes it using Python, orchestrates workflows with Apache Airflow, and stores cleaned data in PostgreSQL for analytics and dashboarding.
 
+![alt text](project_architecture.png)
+
 ---
-![alt text](project_architecture.png.png)
 
 ## Project Overview
 
@@ -45,7 +46,7 @@ The pipeline follows a modern data engineering workflow:
 
 ## ▶️ How to Run
 
-### 1. Clone the repository
+###  Clone the repository
 ```bash
 git clone <repo-url>
 cd stock_pipeline_project
@@ -57,11 +58,11 @@ http://localhost:8080
 Open stock_pipeline_dag
 Click Trigger DAG
 
+---
+
 Built by Paulet as a data engineering portfolio project demonstrating:
 
 ETL pipeline design
 API integration
 Workflow orchestration
 Data warehousing
-
----
