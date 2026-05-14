@@ -7,7 +7,7 @@ import sys
 sys.path.append('/opt/airflow/src')
 
 from ingest_data import run
-from config import BANK_STOCKS
+from config import TECH_STOCKS
 
 default_args = {
     "owner": "paulet",
@@ -16,7 +16,7 @@ default_args = {
 }
 
 def run_stock_pipeline():
-    run(BANK_STOCKS)
+    run(TECH_STOCKS)
 
 with DAG(
     dag_id="stock_data_pipeline",

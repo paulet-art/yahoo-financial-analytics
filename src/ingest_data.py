@@ -1,3 +1,4 @@
+import time
 import pandas as pd
 from api_client import AlphaVantageClient
 from logger import log_error, log_info
@@ -19,6 +20,7 @@ def run(symbols):
 
         if not is_valid:
             log_error(f"{symbol} failed: {message}")
+            time.sleep(15) 
             continue
 
         log_info(f"{symbol} processed successfully")
@@ -57,7 +59,18 @@ def run(symbols):
             if_exists="append",
             index=False,
             method="multi",
-            chunksize=500
+            chunksize=500,
+            dtype={
+                "date": Date(),
+                "symbol": Text(),
+                "open": Float(),
+                "high": Float(),
+                "low": Float(),
+                "close": Float(),
+                "volume": Float()
+            }
         )
 
         log_info(f"{symbol} inserted successfully")
+
+        time.sleep(15)  
